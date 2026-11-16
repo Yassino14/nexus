@@ -1,0 +1,215 @@
+/* =========================================================================
+   NEXUS FILES — Linear / Raycast / Windows 11 Dark Charcoal Stylesheet
+   ========================================================================= */
+
+QMainWindow, QWidget {
+    background-color: #0B0E14;
+    color: #E2E8F0;
+    font-family: "Segoe UI Variable Display", "Segoe UI", "Inter", sans-serif;
+    font-size: 13px;
+}
+
+/* Sidebar */
+QFrame#SidebarFrame {
+    background-color: #0F141C;
+    border-right: 1px solid #1E293B;
+}
+
+QLabel#BrandTitle {
+    color: #F8FAFC;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+QLabel#BrandSubtitle {
+    color: #64748B;
+    font-size: 11px;
+}
+
+QPushButton#NavButton {
+    background-color: transparent;
+    color: #94A3B8;
+    border: none;
+    border-radius: 6px;
+    padding: 9px 14px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+QPushButton#NavButton:hover {
+    background-color: #161F2E;
+    color: #F1F5F9;
+}
+
+QPushButton#NavButton:checked {
+    background-color: #1E293B;
+    color: #FFFFFF;
+    border-left: 3px solid #6366F1;
+    font-weight: 600;
+}
+
+/* Top Navigation Bar */
+QFrame#TopBarFrame {
+    background-color: #0F141C;
+    border-bottom: 1px solid #1E293B;
+}
+
+/* Surface Cards */
+QFrame#SurfaceCard {
+    background-color: #131924;
+    border: 1px solid #1E293B;
+    border-radius: 8px;
+}
+
+QFrame#SurfaceCard:hover {
+    border: 1px solid #334155;
+}
+
+/* Typography Helpers */
+QLabel#PageTitle {
+    color: #F8FAFC;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+QLabel#PageSubtitle {
+    color: #94A3B8;
+    font-size: 12px;
+}
+
+QLabel#SectionHeader {
+    color: #E2E8F0;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+QLabel#StatValue {
+    color: #F8FAFC;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+QLabel#StatLabel {
+    color: #94A3B8;
+    font-size: 12px;
+}
+
+/* Inputs & Controls */
+QLineEdit, QComboBox, QSpinBox, QPlainTextEdit, QTextEdit {
+    background-color: #161F2E;
+    color: #F1F5F9;
+    border: 1px solid #26334D;
+    border-radius: 6px;
+    padding: 6px 10px;
+    selection-background-color: #6366F1;
+}
+
+QLineEdit:focus, QComboBox:focus, QSpinBox:focus, QPlainTextEdit:focus {
+    border: 1px solid #6366F1;
+    background-color: #192336;
+}
+
+/* Buttons */
+QPushButton {
+    background-color: #1E293B;
+    color: #E2E8F0;
+    border: 1px solid #334155;
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-weight: 500;
+}
+
+QPushButton:hover {
+    background-color: #283548;
+    border-color: #475569;
+}
+
+QPushButton#PrimaryButton {
+    background-color: #6366F1;
+    color: #FFFFFF;
+    border: 1px solid #818CF8;
+    font-weight: 600;
+}
+
+QPushButton#PrimaryButton:hover {
+    background-color: #4F46E5;
+}
+
+QPushButton#DangerButton {
+    background-color: #7F1D1D;
+    color: #FECACA;
+    border: 1px solid #991B1B;
+}
+
+QPushButton#DangerButton:hover {
+    background-color: #991B1B;
+}
+
+/* Tables & Trees */
+QTableView, QTableWidget, QTreeWidget, QListWidget {
+    background-color: #111722;
+    alternate-background-color: #141B28;
+    color: #E2E8F0;
+    border: 1px solid #1E293B;
+    border-radius: 6px;
+    gridline-color: #1E293B;
+    selection-background-color: #312E81;
+    selection-color: #FFFFFF;
+}
+
+QHeaderView::section {
+    background-color: #161F2E;
+    color: #94A3B8;
+    font-weight: 600;
+    padding: 7px 10px;
+    border: none;
+    border-bottom: 1px solid #1E293B;
+    border-right: 1px solid #1E293B;
+}
+
+/* Tabs */
+QTabWidget::pane {
+    border: 1px solid #1E293B;
+    background-color: #111722;
+    border-radius: 6px;
+}
+
+QTabBar::tab {
+    background-color: #0F141C;
+    color: #94A3B8;
+    border: 1px solid #1E293B;
+    padding: 7px 16px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    margin-right: 2px;
+}
+
+QTabBar::tab:selected {
+    background-color: #1E293B;
+    color: #FFFFFF;
+    border-bottom: 2px solid #6366F1;
+}
+
+/* ProgressBar */
+QProgressBar {
+    background-color: #161F2E;
+    border: 1px solid #26334D;
+    border-radius: 5px;
+    text-align: center;
+    color: #E2E8F0;
+    height: 16px;
+}
+
+QProgressBar::chunk {
+    background-color: #6366F1;
+    border-radius: 4px;
+}
+
+/* Status Bar */
+QStatusBar {
+    background-color: #0F141C;
+    color: #94A3B8;
+    border-top: 1px solid #1E293B;
+}

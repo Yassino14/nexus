@@ -1,0 +1,12 @@
+# NEXUS FILES — Production Dependencies (Python 3.12+ / Windows 10 & 11)
+PySide6>=6.6.0
+psutil>=5.9.8
+watchdog>=4.0.0
+PyMuPDF>=1.24.0
+Pillow>=10.2.0
+openpyxl>=3.1.2
+python-docx>=1.1.0
+pyqtgraph>=0.13.4
+send2trash>=1.8.2
+reportlab>=4.1.0
+pyinstaller>=6.5.0
