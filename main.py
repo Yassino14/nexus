@@ -114,7 +114,17 @@ def main() -> int:
         enabled=settings_mgr.settings.database_enabled,
     )
     window = NexusMainWindow(settings_mgr=settings_mgr, db=db)
-    window.show()
+    show_maximized = False
+    if hasattr(QApplication, "primaryScreen"):
+        scr = QApplication.primaryScreen()
+        if scr is not None:
+            avail = scr.availableGeometry()
+            if avail.width() <= 1440 or avail.height() <= 820:
+                show_maximized = True
+    if show_maximized and hasattr(window, "showMaximized"):
+        window.showMaximized()
+    else:
+        window.show()
     if hasattr(window, "raise_"):
         window.raise_()
     if hasattr(window, "activateWindow"):

@@ -52,7 +52,7 @@ class StorageDonutWidget(QFrame):
     def __init__(self, title: str = "Storage Usage", parent: QWidget | None = None) -> None:
         super().__init__(parent)
         self.setObjectName("SurfaceCard")
-        self.setMinimumSize(240, 210)
+        self.setMinimumSize(180, 155)
         self.title = title
         self.segments: List[Tuple[str, float, str]] = [
             ("Used", 0.0, "#6366F1"),

@@ -30,16 +30,16 @@ class TopNavigationBar(QFrame):
     def __init__(self, parent: QWidget | None = None) -> None:
         super().__init__(parent)
         self.setObjectName("TopBarFrame")
-        self.setFixedHeight(58)
+        self.setFixedHeight(48)
 
         layout = QHBoxLayout(self)
-        layout.setContentsMargins(18, 8, 18, 8)
-        layout.setSpacing(12)
+        layout.setContentsMargins(12, 6, 12, 6)
+        layout.setSpacing(8)
 
         drive_lbl = QLabel("Active Drive:")
         drive_lbl.setObjectName("PageSubtitle")
         self.drive_combo = QComboBox()
-        self.drive_combo.setMinimumWidth(180)
+        self.drive_combo.setMinimumWidth(140)
         self.drive_combo.currentTextChanged.connect(self._on_drive_combo_changed)
 
         self.search_input = QLineEdit()

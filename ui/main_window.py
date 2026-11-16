@@ -31,6 +31,8 @@ from ui.pages.projects import ProjectFinderPage
 from ui.pages.search import GlobalSearchPage
 from ui.pages.settings import SettingsPage
 from ui.qt_compat import (
+    PYSIDE6_AVAILABLE,
+    QApplication,
     QHBoxLayout,
     QIcon,
     QMainWindow,
@@ -59,7 +61,9 @@ class NexusMainWindow(QMainWindow):
         self.setWindowTitle(
             "NEXUS FILES — Advanced Windows File Explorer, Search Engine & Disk Analyzer"
         )
-        self.resize(1440, 900)
+        if hasattr(self, "setMinimumSize"):
+            self.setMinimumSize(880, 500)
+        self._apply_responsive_geometry()
 
         self.settings_mgr = settings_mgr or SettingsManager()
         self.db = db or LocalDatabase(
@@ -161,6 +165,22 @@ class NexusMainWindow(QMainWindow):
 
         self._refresh_index_badge()
         self.statusBar().showMessage("NEXUS FILES ready — 100% Local Offline Mode.")
+
+    def _apply_responsive_geometry(self) -> None:
+        """Size and center the window dynamically based on the active monitor's available geometry."""
+        if PYSIDE6_AVAILABLE and hasattr(QApplication, "primaryScreen"):
+            screen = QApplication.primaryScreen()
+            if screen is not None:
+                avail = screen.availableGeometry()
+                target_w = min(1440, max(880, int(avail.width() * 0.94)))
+                target_h = min(900, max(500, int(avail.height() * 0.92)))
+                self.resize(target_w, target_h)
+                if hasattr(self, "move"):
+                    x = avail.x() + max(0, (avail.width() - target_w) // 2)
+                    y = avail.y() + max(0, (avail.height() - target_h) // 2)
+                    self.move(x, y)
+                return
+        self.resize(1280, 700)
 
     def _on_sidebar_nav(self, index: int, name: str) -> None:
         self.stack.setCurrentIndex(index)

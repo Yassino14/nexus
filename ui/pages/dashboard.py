@@ -60,8 +60,8 @@ class DashboardPage(QWidget):
         self.worker: Optional[DiskAnalysisWorker] = None
 
         root_layout = QVBoxLayout(self)
-        root_layout.setContentsMargins(20, 18, 20, 18)
-        root_layout.setSpacing(14)
+        root_layout.setContentsMargins(14, 10, 14, 10)
+        root_layout.setSpacing(8)
 
         # Header Row
         header_row = QHBoxLayout()
@@ -76,7 +76,7 @@ class DashboardPage(QWidget):
         title_box.addWidget(self.subtitle_lbl)
 
         self.drive_selector = QComboBox()
-        self.drive_selector.setMinimumWidth(220)
+        self.drive_selector.setMinimumWidth(160)
         self.drive_selector.currentIndexChanged.connect(self._on_drive_switched)
 
         self.scan_btn = QPushButton("Scan Active Drive Now")
@@ -100,9 +100,18 @@ class DashboardPage(QWidget):
         self.progress_bar.setVisible(False)
         root_layout.addWidget(self.progress_bar)
 
+        # Scrollable body so all cards, charts, and tables adapt to any screen height
+        scroll = QScrollArea()
+        scroll.setWidgetResizable(True)
+        scroll.setFrameShape(QFrame.NoFrame)
+        body_widget = QWidget()
+        body_layout = QVBoxLayout(body_widget)
+        body_layout.setContentsMargins(0, 0, 4, 0)
+        body_layout.setSpacing(10)
+
         # KPI Cards Row
         cards_row = QHBoxLayout()
-        cards_row.setSpacing(12)
+        cards_row.setSpacing(8)
         self.card_capacity = StatCard("Total Capacity", "0 GB", "Volume Size", "#6366F1")
         self.card_used = StatCard("Used Storage", "0 GB", "0% Used", "#06B6D4")
         self.card_free = StatCard("Available Free", "0 GB", "Ready", "#10B981")
@@ -117,11 +126,11 @@ class DashboardPage(QWidget):
             self.card_index,
         ):
             cards_row.addWidget(c, 1)
-        root_layout.addLayout(cards_row)
+        body_layout.addLayout(cards_row)
 
         # Charts Grid (Donut + Category + Extension + File Age)
         charts_grid = QGridLayout()
-        charts_grid.setSpacing(12)
+        charts_grid.setSpacing(8)
 
         self.donut_chart = StorageDonutWidget("Drive Capacity Usage")
         self.cat_chart = CategoryBreakdownChart("Storage Breakdown by Category")
@@ -132,15 +141,17 @@ class DashboardPage(QWidget):
         charts_grid.addWidget(self.cat_chart, 0, 1)
         charts_grid.addWidget(self.ext_chart, 1, 0)
         charts_grid.addWidget(self.age_chart, 1, 1)
-        root_layout.addLayout(charts_grid, 1)
+        body_layout.addLayout(charts_grid, 1)
 
         # Bottom Tables: Largest Folders & Largest Files
         tables_row = QHBoxLayout()
-        tables_row.setSpacing(12)
+        tables_row.setSpacing(8)
 
         folders_frame = QFrame()
         folders_frame.setObjectName("SurfaceCard")
+        folders_frame.setMinimumHeight(150)
         fl = QVBoxLayout(folders_frame)
+        fl.setContentsMargins(10, 8, 10, 8)
         fl.addWidget(QLabel("Largest Scanned Folders"))
         self.top_folders_table = QTableWidget(0, 3)
         self.top_folders_table.setHorizontalHeaderLabels(["Folder", "Size", "Full Path"])
@@ -149,7 +160,9 @@ class DashboardPage(QWidget):
 
         files_frame = QFrame()
         files_frame.setObjectName("SurfaceCard")
+        files_frame.setMinimumHeight(150)
         fil = QVBoxLayout(files_frame)
+        fil.setContentsMargins(10, 8, 10, 8)
         fil.addWidget(QLabel("Largest Scanned Files (Double-click to Inspect)"))
         self.top_files_table = QTableWidget(0, 3)
         self.top_files_table.setHorizontalHeaderLabels(["Filename", "Size", "Full Path"])
@@ -159,7 +172,10 @@ class DashboardPage(QWidget):
 
         tables_row.addWidget(folders_frame, 1)
         tables_row.addWidget(files_frame, 1)
-        root_layout.addLayout(tables_row, 1)
+        body_layout.addLayout(tables_row, 1)
+
+        scroll.setWidget(body_widget)
+        root_layout.addWidget(scroll, 1)
 
         self.refresh_drives()
 

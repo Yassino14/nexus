@@ -20,11 +20,11 @@ class StatCard(QFrame):
     ) -> None:
         super().__init__(parent)
         self.setObjectName("SurfaceCard")
-        self.setMinimumWidth(165)
+        self.setMinimumWidth(115)
 
         layout = QVBoxLayout(self)
-        layout.setContentsMargins(16, 14, 16, 14)
-        layout.setSpacing(4)
+        layout.setContentsMargins(12, 8, 12, 8)
+        layout.setSpacing(2)
 
         self.title_lbl = QLabel(title)
         self.title_lbl.setObjectName("StatLabel")

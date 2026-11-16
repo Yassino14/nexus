@@ -52,22 +52,25 @@ class DiskAnalyzerPage(QWidget):
         self.worker: Optional[DiskAnalysisWorker] = None
 
         layout = QVBoxLayout(self)
-        layout.setContentsMargins(20, 16, 20, 16)
-        layout.setSpacing(12)
+        layout.setContentsMargins(14, 10, 14, 10)
+        layout.setSpacing(8)
 
-        # Header & Controls
-        top_row = QHBoxLayout()
+        # Header & Controls (split into title + control bar for compact screens)
         title_lbl = QLabel("Disk Space Analyzer & Interactive Treemap")
         title_lbl.setObjectName("PageTitle")
-        top_row.addWidget(title_lbl, 1)
+        layout.addWidget(title_lbl)
 
+        top_row = QHBoxLayout()
         self.path_input = QLineEdit(self.settings_mgr.settings.default_drive)
-        self.path_input.setMinimumWidth(240)
+        self.path_input.setMinimumWidth(140)
+
+        self.browse_btn = QPushButton("Browse...")
+        self.browse_btn.clicked.connect(self._browse_path)
 
         self.threshold_spin = QSpinBox()
         self.threshold_spin.setRange(1, 10240)
         self.threshold_spin.setValue(10)
-        self.threshold_spin.setSuffix(" MB threshold")
+        self.threshold_spin.setSuffix(" MB min")
 
         self.scan_btn = QPushButton("Analyze Path")
         self.scan_btn.setObjectName("PrimaryButton")
@@ -84,8 +87,10 @@ class DiskAnalyzerPage(QWidget):
         self.export_pdf_btn = QPushButton("Export PDF")
         self.export_pdf_btn.clicked.connect(lambda: self.export_report("pdf"))
 
+        top_row.addWidget(QLabel("Target:"))
+        top_row.addWidget(self.path_input, 1)
         for w in (
-            self.path_input,
+            self.browse_btn,
             self.threshold_spin,
             self.scan_btn,
             self.cancel_btn,
@@ -135,6 +140,11 @@ class DiskAnalyzerPage(QWidget):
         tbl.setHorizontalHeaderLabels(headers)
         tbl.horizontalHeader().setStretchLastSection(True)
         return tbl
+
+    def _browse_path(self) -> None:
+        chosen = QFileDialog.getExistingDirectory(self, "Select Drive or Folder to Analyze")
+        if chosen:
+            self.path_input.setText(chosen)
 
     def run_analysis(self, synchronous: bool = False) -> Optional[DiskAnalysisResult]:
         target = self.path_input.text().strip() or "."

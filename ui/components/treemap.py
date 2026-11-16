@@ -44,7 +44,7 @@ class InteractiveTreemapWidget(QFrame):
     def __init__(self, parent: QWidget | None = None) -> None:
         super().__init__(parent)
         self.setObjectName("SurfaceCard")
-        self.setMinimumSize(420, 260)
+        self.setMinimumSize(260, 150)
         self.setCursor(Qt.PointingHandCursor)
         self.folders: List[FolderStat] = []
         self.computed_rects: List[TreemapRect] = []

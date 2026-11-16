@@ -251,14 +251,23 @@ class SingleExplorerTab(QWidget):
         bl.setSpacing(4)
 
         parts = Path(self.current_path).parts
+        accum_parts: List[tuple[str, str]] = []
         accum = ""
-        for idx, part in enumerate(parts):
+        for part in parts:
             accum = str(Path(accum) / part) if accum else part
-            btn = QPushButton(part)
-            btn.setStyleSheet("padding: 3px 8px; font-size: 12px;")
-            btn.clicked.connect(lambda checked=False, p=accum: self.navigate_to(p))
+            accum_parts.append((part, accum))
+        # Show at most the root + last 5 segments so deep paths never force horizontal overflow
+        if len(accum_parts) > 6:
+            display_items = [accum_parts[0], ("...", accum_parts[-5][1])] + accum_parts[-5:]
+        else:
+            display_items = accum_parts
+        for idx, (part, target_p) in enumerate(display_items):
+            btn = QPushButton(part[:24])
+            btn.setToolTip(target_p)
+            btn.setStyleSheet("padding: 2px 6px; font-size: 11px;")
+            btn.clicked.connect(lambda checked=False, p=target_p: self.navigate_to(p))
             bl.addWidget(btn)
-            if idx < len(parts) - 1:
+            if idx < len(display_items) - 1:
                 sep = QLabel("›")
                 sep.setObjectName("PageSubtitle")
                 bl.addWidget(sep)
@@ -396,35 +405,43 @@ class FileExplorerPage(QWidget):
         self.clipboard_mode: str = ""  # 'copy' or 'cut'
 
         root_layout = QVBoxLayout(self)
-        root_layout.setContentsMargins(18, 14, 18, 14)
-        root_layout.setSpacing(10)
+        root_layout.setContentsMargins(12, 10, 12, 10)
+        root_layout.setSpacing(6)
 
-        # Toolbar Row
+        # Toolbar Row (compact labels so it fits comfortably on 1366x768 screens)
         toolbar = QHBoxLayout()
-        toolbar.setSpacing(8)
+        toolbar.setSpacing(5)
 
-        self.new_tab_btn = QPushButton("+ New Tab")
+        self.new_tab_btn = QPushButton("+ Tab")
+        self.new_tab_btn.setToolTip("Open New Tab")
         self.new_tab_btn.clicked.connect(lambda: self.add_explorer_tab())
 
-        self.new_folder_btn = QPushButton("📁 New Folder")
+        self.new_folder_btn = QPushButton("📁 +Folder")
+        self.new_folder_btn.setToolTip("Create New Folder")
         self.new_folder_btn.clicked.connect(self.action_new_folder)
 
-        self.new_file_btn = QPushButton("📄 New File")
+        self.new_file_btn = QPushButton("📄 +File")
+        self.new_file_btn.setToolTip("Create New File")
         self.new_file_btn.clicked.connect(self.action_new_file)
 
-        self.copy_btn = QPushButton("Copy (Ctrl+C)")
+        self.copy_btn = QPushButton("Copy")
+        self.copy_btn.setToolTip("Copy (Ctrl+C)")
         self.copy_btn.clicked.connect(self.action_copy)
 
-        self.cut_btn = QPushButton("Cut (Ctrl+X)")
+        self.cut_btn = QPushButton("Cut")
+        self.cut_btn.setToolTip("Cut (Ctrl+X)")
         self.cut_btn.clicked.connect(self.action_cut)
 
-        self.paste_btn = QPushButton("Paste (Ctrl+V)")
+        self.paste_btn = QPushButton("Paste")
+        self.paste_btn.setToolTip("Paste (Ctrl+V)")
         self.paste_btn.clicked.connect(self.action_paste)
 
-        self.rename_btn = QPushButton("Rename (F2)")
+        self.rename_btn = QPushButton("Rename")
+        self.rename_btn.setToolTip("Rename (F2)")
         self.rename_btn.clicked.connect(self.action_rename)
 
-        self.delete_btn = QPushButton("Recycle (Del)")
+        self.delete_btn = QPushButton("Recycle")
+        self.delete_btn.setToolTip("Move to Recycle Bin (Delete)")
         self.delete_btn.setObjectName("DangerButton")
         self.delete_btn.clicked.connect(self.action_delete)
 
@@ -438,10 +455,10 @@ class FileExplorerPage(QWidget):
         self.view_combo.addItems(["Detailed View", "List View", "Grid View"])
         self.view_combo.currentTextChanged.connect(self._on_view_mode_changed)
 
-        self.dual_pane_chk = QCheckBox("Dual-Pane Mode")
+        self.dual_pane_chk = QCheckBox("Dual-Pane")
         self.dual_pane_chk.stateChanged.connect(self._toggle_dual_pane)
 
-        self.hidden_chk = QCheckBox("Hidden Files")
+        self.hidden_chk = QCheckBox("Hidden")
         self.hidden_chk.setChecked(self.settings_mgr.settings.show_hidden_files)
         self.hidden_chk.stateChanged.connect(self._toggle_hidden_files)
 
@@ -456,10 +473,10 @@ class FileExplorerPage(QWidget):
             self.delete_btn,
             self.undo_btn,
             self.inspect_btn,
-            self.view_combo,
-            self.dual_pane_chk,
-            self.hidden_chk,
         ):
+            toolbar.addWidget(w)
+        toolbar.addStretch()
+        for w in (self.view_combo, self.dual_pane_chk, self.hidden_chk):
             toolbar.addWidget(w)
         root_layout.addLayout(toolbar)
 

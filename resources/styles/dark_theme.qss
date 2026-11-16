@@ -32,9 +32,9 @@ QPushButton#NavButton {
     color: #94A3B8;
     border: none;
     border-radius: 6px;
-    padding: 9px 14px;
+    padding: 7px 10px;
     text-align: left;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 500;
 }
 
@@ -70,7 +70,7 @@ QFrame#SurfaceCard:hover {
 /* Typography Helpers */
 QLabel#PageTitle {
     color: #F8FAFC;
-    font-size: 20px;
+    font-size: 17px;
     font-weight: 700;
 }
 
@@ -81,19 +81,19 @@ QLabel#PageSubtitle {
 
 QLabel#SectionHeader {
     color: #E2E8F0;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
 }
 
 QLabel#StatValue {
     color: #F8FAFC;
-    font-size: 22px;
+    font-size: 18px;
     font-weight: 700;
 }
 
 QLabel#StatLabel {
     color: #94A3B8;
-    font-size: 12px;
+    font-size: 11px;
 }
 
 /* Inputs & Controls */
@@ -102,7 +102,7 @@ QLineEdit, QComboBox, QSpinBox, QPlainTextEdit, QTextEdit {
     color: #F1F5F9;
     border: 1px solid #26334D;
     border-radius: 6px;
-    padding: 6px 10px;
+    padding: 4px 8px;
     selection-background-color: #6366F1;
 }
 
@@ -117,7 +117,7 @@ QPushButton {
     color: #E2E8F0;
     border: 1px solid #334155;
     border-radius: 6px;
-    padding: 6px 14px;
+    padding: 5px 10px;
     font-weight: 500;
 }
 

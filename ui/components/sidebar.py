@@ -41,12 +41,12 @@ class SidebarNavigation(QFrame):
     def __init__(self, parent: QWidget | None = None) -> None:
         super().__init__(parent)
         self.setObjectName("SidebarFrame")
-        self.setMinimumWidth(225)
-        self.setMaximumWidth(240)
+        self.setMinimumWidth(180)
+        self.setMaximumWidth(200)
 
         layout = QVBoxLayout(self)
-        layout.setContentsMargins(12, 18, 12, 16)
-        layout.setSpacing(4)
+        layout.setContentsMargins(10, 12, 10, 10)
+        layout.setSpacing(2)
 
         brand_title = QLabel("NEXUS FILES")
         brand_title.setObjectName("BrandTitle")
@@ -55,7 +55,7 @@ class SidebarNavigation(QFrame):
 
         layout.addWidget(brand_title)
         layout.addWidget(brand_sub)
-        layout.addSpacing(14)
+        layout.addSpacing(8)
 
         self.buttons: Dict[int, QPushButton] = {}
         for idx, name in enumerate(self.PAGES):
